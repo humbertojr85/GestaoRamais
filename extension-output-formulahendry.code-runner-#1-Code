@@ -1,0 +1,21 @@
+<<<<<<< Tabnine <<<<<<<
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!-- Add other dependencies as needed -->
+</dependencies>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>2.7.5</version> <!-- Replace with the desired Spring Boot version -->
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+>>>>>>> Tabnine >>>>>>>// {"source":"chat"}
