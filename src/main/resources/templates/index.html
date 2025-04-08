@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Ramais - Usuários</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          max-width: 600px;
+          margin: auto;
+          padding: 20px;
+        }
+        label {
+          display: block;
+          margin-top: 10px;
+        }
+        input {
+          width: 100%;
+          padding: 8px;
+        }
+        button {
+          margin-top: 15px;
+          padding: 10px;
+          background: #007bff;
+          color: white;
+          border: none;
+          cursor: pointer;
+        }
+        button:hover {
+          background: #0056b3;
+        }
+      </style>
+      
+</head>
+<body>
+    <h1>Cadastro de Usuário</h1>
+    <form id="form-usuario">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <h2>Usuários Cadastrados</h2>
+    <ul id="lista-usuarios"></ul>
+
+    <script>
+        const form = document.getElementById('form-usuario');
+        const lista = document.getElementById('lista-usuarios');
+
+        // Submete novo usuário
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+
+            const response = await fetch('http://localhost:8080/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, email })
+            });
+
+            if (response.ok) {
+                alert('Usuário cadastrado com sucesso!');
+                console.log("Enviando:", { nome, email });
+                form.reset();
+                carregarUsuarios();
+            } else {
+                alert('Erro ao cadastrar usuário.');
+            }
+        });
+
+        // Carrega usuários
+        async function carregarUsuarios() {
+            const response = await fetch('http://localhost:8080/usuarios');
+            const usuarios = await response.json();
+
+            lista.innerHTML = '';
+            usuarios.forEach(usuario => {
+                const li = document.createElement('li');
+                li.textContent = `${usuario.nome} - ${usuario.email}`;
+                lista.appendChild(li);
+            });
+        }
+
+        carregarUsuarios();
+    </script>
+</body>
+</html>
