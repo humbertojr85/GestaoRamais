@@ -40,6 +40,14 @@ public class RamalService {
                 .orElseThrow(() -> new RuntimeException("Ramal não encontrado"));
     }
 
+    public void deletarRamal(UUID id) {
+        if (ramalRepository.existsById(id)) {
+            ramalRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Ramal não encontrado");
+        }
+    }
+
     public List<Usuario> listarUsuariosLogados() {
         return usuarioRepository.findAll().stream()
                 .filter(usuario -> usuario.getRamal() != null)

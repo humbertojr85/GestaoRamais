@@ -1,211 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>Gestão de Ramais</title>
-  <link rel="stylesheet" href="estilo.css">
-</head>
-<body>
-
-  <h1>Gestão de Ramais</h1>
-
-  <h2>1. Cadastrar Usuário</h2>
-  <form id="usuarioForm">
-    <input type="text" id="nome" placeholder="Nome" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <button type="submit">Cadastrar</button>
-  </form>
-
-  <h2>2. Gerar Ramais Disponíveis</h2>
-  <form id="gerarRamaisForm">
-    <input type="number" id="inicioRamal" placeholder="Ramal Inicial" required />
-    <input type="number" id="fimRamal" placeholder="Ramal Final" required />
-    <button type="submit">Gerar Ramais</button>
-  </form>
-
-  <h2>3. Logar em Ramal</h2>
-  <form id="logarForm">
-    <select id="usuarioSelect" required></select>
-    <select id="ramalSelect" required></select>
-    <button type="submit">Logar</button>
-  </form>
-
-  <h2>4. Usuários Logados</h2>
-  <table id="usuariosLogadosTable">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Ramal</th>
-        <th>Status</th>
-        <th>Ação</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <script>
-    const api = "http://localhost:8080";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      carregarUsuarios();
-      carregarRamaisDisponiveis();
-    });
-
-    // Cadastrar usuário
-    document.getElementById("usuarioForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const nome = document.getElementById("nome").value;
-      const email = document.getElementById("email").value;
-
-      const res = await fetch(`${api}/usuarios`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email }),
-      });
-
-      if (res.ok) {
-        alert("Usuário cadastrado com sucesso!");
-        carregarUsuarios();
-        document.getElementById("usuarioForm").reset();
-      } else {
-        alert("Erro ao cadastrar usuário.");
-      }
-    });
-
-    // Marcar usuários logados
-    function carregarUsuarios() {
-    fetch('http://localhost:8080/usuarios')
-        .then(response => response.json())
-        .then(data => {
-            const select = document.getElementById('usuarios');
-            select.innerHTML = ''; // limpa a lista
-
-            data.forEach(usuario => {
-                const option = document.createElement('option');
-                option.value = usuario.id;
-
-                // Verifica se o usuário está logado (tem ramal associado)
-                if (usuario.ramal) {
-                    option.innerHTML = '🟢 ' + usuario.nome;
-                } else {
-                    option.innerHTML = usuario.nome;
-                }
-
-                select.appendChild(option);
-            });
-        })
-        .catch(error => {
-            console.error('Erro ao carregar usuários:', error);
-        });
-}
-
-
-    // Gerar ramais
-    document.getElementById("gerarRamaisForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const inicio = document.getElementById("inicioRamal").value;
-      const fim = document.getElementById("fimRamal").value;
-
-      const res = await fetch(`${api}/ramais/gerar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inicio, fim }),
-      });
-
-      if (res.ok) {
-        alert("Ramais gerados com sucesso!");
-        carregarRamaisDisponiveis();
-      } else {
-        alert("Erro ao gerar ramais.");
-      }
-    });
-
-    // Logar usuário em ramal
-    document.getElementById("logarForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const idUsuario = document.getElementById("usuarioSelect").value;
-      const idRamal = document.getElementById("ramalSelect").value;
-
-      const res = await fetch(`${api}/ramais/logar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idUsuario, idRamal }),
-      });
-
-      if (res.ok) {
-        alert("Usuário logado com sucesso!");
-        carregarUsuarios();
-        carregarRamaisDisponiveis();
-      } else {
-        alert("Erro ao logar usuário.");
-      }
-    });
-
-    async function carregarUsuarios() {
-      const res = await fetch(`${api}/usuarios`);
-      const usuarios = await res.json();
-
-      const select = document.getElementById("usuarioSelect");
-      const table = document.querySelector("#usuariosLogadosTable tbody");
-
-      select.innerHTML = "";
-      table.innerHTML = "";
-
-      usuarios.forEach((usuario) => {
-        if (!usuario.ramal) {
-          const option = document.createElement("option");
-          option.value = usuario.id;
-          option.text = usuario.nome;
-          select.appendChild(option);
-        }
-
-        if (usuario.ramal) {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${usuario.nome}</td>
-            <td>${usuario.email}</td>
-            <td>${usuario.ramal.numero}</td>
-            <td><button class="btn-logado" disabled>Logado</button></td>
-            <td><button class="btn-logoff" onclick="fazerLogoff('${usuario.ramal.id}')">Logoff</button></td>
-          `;
-          table.appendChild(tr);
-        }
-      });
-    }
-
-    
-
-    async function carregarRamaisDisponiveis() {
-      const res = await fetch(`${api}/ramais/disponiveis`);
-      const ramais = await res.json();
-
-      const select = document.getElementById("ramalSelect");
-      select.innerHTML = "";
-
-      ramais.forEach((ramal) => {
-        const option = document.createElement("option");
-        option.value = ramal.id;
-        option.text = ramal.numero;
-        select.appendChild(option);
-      });
-    }
-
-    async function fazerLogoff(idRamal) {
-      const res = await fetch(`${api}/ramais/logoff`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idRamal }),
-      });
-
-      if (res.ok) {
-        alert("Logoff realizado!");
-        carregarUsuarios();
-        carregarRamaisDisponiveis();
-      } else {
-        alert("Erro ao fazer logoff.");
-      }
-    }
-  </script>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestão de Ramais</title>
+    <link rel="stylesheet" href="estilo.css" />
+  </head>
+  <body>
+    <h1>Gestão de Ramais</h1>
+  
+    <div class="container">
+      <div class="coluna-esquerda">
+        <section>
+          <h2>1. Cadastrar Usuário</h2>
+          <form id="usuarioForm">
+            <input type="text" id="nome" placeholder="Nome" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <button type="submit">Cadastrar</button>
+          </form>
+        </section>
+  
+        <section>
+          <h2>2. Gerar Ramais Disponíveis</h2>
+          <form id="gerarRamaisForm">
+            <input type="number" id="inicioRamal" placeholder="Ramal Inicial" required />
+            <input type="number" id="fimRamal" placeholder="Ramal Final" required />
+            <button type="submit">Gerar Ramais</button>
+          </form>
+        </section>
+  
+        <section>
+          <h2>3. Logar em Ramal</h2>
+          <form id="logarForm">
+            <select id="usuarioSelect" required></select>
+            <select id="ramalSelect" required></select>
+            <button type="submit">Logar</button>
+          </form>
+        </section>
+      </div>
+  
+      <div class="coluna-direita">
+        <section>
+          <h2>4. Usuários Não Logados</h2>
+          <ul id="usuariosNaoLogados"></ul>
+        </section>
+  
+        <section>
+          <h2>5. Ramais Disponíveis</h2>
+          <ul id="listaRamaisDisponiveis"></ul>
+        </section>
+      </div>
+    </div>
+  
+    <section>
+      <h2>6. Usuários Logados</h2>
+      <table id="usuariosLogadosTable">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ramal</th>
+            <th>Status</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  
+    <script src="script.js"></script>
+  </body>
+  

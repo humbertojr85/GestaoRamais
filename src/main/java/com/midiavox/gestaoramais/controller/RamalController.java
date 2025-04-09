@@ -33,6 +33,12 @@ public class RamalController {
         return ResponseEntity.ok(ramalService.listarDisponiveis());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarRamal(@PathVariable UUID id) {
+        ramalService.deletarRamal(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/logar")
     public ResponseEntity<String> logarRamal(@RequestBody Map<String, String> dados) {
         UUID idUsuario = UUID.fromString(dados.get("idUsuario"));

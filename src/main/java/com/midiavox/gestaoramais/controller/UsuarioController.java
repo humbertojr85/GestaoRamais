@@ -53,7 +53,7 @@ public class UsuarioController {
         return ResponseEntity.ok(salvo);
     }
 
-    @DeleteMapping("/usuarios/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable UUID id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);

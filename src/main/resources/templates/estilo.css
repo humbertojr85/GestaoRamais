@@ -34,6 +34,8 @@ input, select, button {
   width: 100%;
   max-width: 300px;
   display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 input, select, button {
@@ -67,4 +69,58 @@ th, td {
   color: white;
   border: none;
   padding: 5px 10px;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.coluna-esquerda,
+.coluna-direita {
+  flex: 1;
+  min-width: 300px;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+#usuariosNaoLogados li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#usuariosNaoLogados li button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#listaRamaisDisponiveis li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#listaRamaisDisponiveis li button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
