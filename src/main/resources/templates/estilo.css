@@ -1,0 +1,224 @@
+/* Reset global e fonte padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  top: 60px;
+  font-family: "Roboto Condensed", sans-serif;
+  padding: 20px;
+  background: linear-gradient(to left, #74d3b3, #e7fcf7);
+  box-sizing: unset;
+}
+
+/* Cabeçalho fixo com logo e campo de pesquisa */
+header {
+  position: fixed;
+  top: 0;
+  width: 98%;
+  height: 80px;
+  z-index: 10;
+  background: linear-gradient(to left, #74d3b3, #e7fcf7);
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cabecalho h1 {
+  font-size: 40px;
+  color: #1fc0c0;
+}
+
+.cabecalho input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #3daa98;
+  border-radius: 20px;
+}
+
+.cabecalho input[type="text"]:focus {
+  border-color: #1fc0c0;
+  outline: none;
+}
+
+#logo {
+  width: 70px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Seções (cards) */
+section {
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Campos de formulário */
+input,
+select,
+button {
+  margin: 5px 0;
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Cores de status */
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+/* Tabela de usuários logados */
+table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+/* Botões de status */
+.btn-logoff {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn-logado {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+}
+
+/* Layout em linha para seções 1, 2, 3 e também 4, 5 */
+.linha-formularios,
+.linha-listas {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* Tamanho mínimo para cada seção */
+.linha-formularios section,
+.linha-listas section {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Botões lado a lado para ramais */
+.botoes-ramais {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Estilo das listas (usuários não logados e ramais disponíveis) */
+#usuariosNaoLogados li,
+#listaRamaisDisponiveis li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+/* Botões de exclusão nas listas */
+#usuariosNaoLogados li button,
+#listaRamaisDisponiveis li button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Estilo base para todos os botões */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Botões padrão (geral) */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0px);
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão vermelho (Excluir) */
+#usuariosNaoLogados li button,
+#listaRamaisDisponiveis li button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+#usuariosNaoLogados li button:hover,
+#listaRamaisDisponiveis li button:hover {
+  background-color: #c82333;
+}
+
+/* Botão Logoff (vermelho) */
+.btn-logoff {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-logoff:hover {
+  background-color: darkred;
+}
+
+/* Botão Logado (verde, desabilitado) */
+.btn-logado {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: not-allowed;
+  border-radius: 4px;
+  opacity: 0.8;
+}

@@ -30,6 +30,9 @@ public class Usuario {
     @UpdateTimestamp
     private Instant updateTimestamp;
 
+    @OneToOne(mappedBy = "usuarioLogado")
+    private Ramal ramal; // Ramal atual do usuário
+
     public Usuario() {}
 
     public Usuario(String nome, String email) {
