@@ -21,15 +21,18 @@ public class RamalService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void cadastrarFaixaRamal(int de, int ate) {
+    public int cadastrarFaixaRamal(int de, int ate) {
+        int criados = 0;
         for (int i = de; i <= ate; i++) {
             String numero = String.valueOf(i);
             if (!ramalRepository.existsByNumero(numero)) {
                 Ramal ramal = new Ramal();
                 ramal.setNumero(numero);
                 ramalRepository.save(ramal);
+                criados++;
             }
         }
+        return criados;
     }
 
     public List<Ramal> listarDisponiveis() {

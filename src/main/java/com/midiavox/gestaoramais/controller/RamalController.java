@@ -24,8 +24,13 @@ public class RamalController {
     public ResponseEntity<String> gerarRamais(@RequestBody Map<String, Integer> faixa) {
         Integer inicio = faixa.get("inicio");
         Integer fim = faixa.get("fim");
-        ramalService.cadastrarFaixaRamal(inicio, fim);
-        return ResponseEntity.ok("Ramais gerados com sucesso");
+        int criados = ramalService.cadastrarFaixaRamal(inicio, fim);
+
+        if (criados > 0) {
+            return ResponseEntity.ok("Ramais gerados com sucesso: " + criados);
+        } else {
+            return ResponseEntity.badRequest().body("Nenhum ramal foi criado, todos já existem.");
+        }
     }
 
     @GetMapping("/disponiveis")
