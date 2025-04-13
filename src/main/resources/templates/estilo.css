@@ -2,22 +2,56 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Mukta', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Roboto Condensed', sans-serif;
-  outline: nome;  
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 body {
+  position: relative;
+  top: 60px;
   font-family: Arial, sans-serif;
   padding: 20px;
-  background: url(./Imagens/background.png) no-repeat center center fixed;
+  /* background: url(./Imagens/background.png) no-repeat center center fixed;*/
+  background: linear-gradient(to left, #74d3b3, #e7fcf7);
   box-sizing: unset;
 }
 
 h1 {
   color: #333;
+}
+header {
+  position: fixed;
+  top: 0;
+  width: 98%;
+  height: 80px;
+  z-index: 10;
+  background: linear-gradient(to left, #74d3b3, #e7fcf7);
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.cabecalho h1 {
+  font-size: 40px;
+  color: #1fc0c0;
+}
+.cabecalho input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #3daa98;
+  border-radius: 20px;
+}
+.cabecalho input[type="text"]:focus {
+  border-color: #1fc0c0;
+  outline: none;
+}
+
+#logo{
+  width: 70px;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 section {
@@ -25,10 +59,12 @@ section {
   background: #fff;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-input, select, button {
+input,
+select,
+button {
   margin: 5px 0;
   padding: 8px;
   width: 100%;
@@ -38,10 +74,6 @@ input, select, button {
   border-radius: 4px;
 }
 
-input, select, button {
-  margin: 5px 0;
-  padding: 5px;
-}
 .success {
   color: green;
 }
@@ -53,7 +85,8 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-th, td {
+th,
+td {
   border: 1px solid #ccc;
   padding: 8px;
 }
@@ -123,4 +156,27 @@ ul {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
+}
+
+.linha-formularios,
+.linha-listas {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.linha-formularios section,
+.linha-listas section {
+  flex: 1;
+  min-width: 300px;
+}
+
+.botoes-ramais {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }

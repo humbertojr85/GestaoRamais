@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class RamalService {
@@ -83,4 +84,27 @@ public class RamalService {
             ramalRepository.save(ramal);
         }
     }
+
+    public void excluirFaixaRamais(int de, int ate) {
+        boolean excluido = false;
+    
+        for (int i = de; i <= ate; i++) {
+            String numero = String.valueOf(i);
+            Optional<Ramal> optionalRamal = ramalRepository.findByNumero(numero);
+    
+            if (optionalRamal.isPresent()) {
+                Ramal ramal = optionalRamal.get();
+    
+                if (ramal.getUsuarioLogado() == null) { // só exclui se não estiver logado
+                    ramalRepository.delete(ramal);
+                    excluido = true;
+                }
+            }
+        }
+    
+        if (!excluido) {
+            throw new RuntimeException("Nenhum ramal foi excluído. Verifique se eles existem ou estão logados.");
+        }
+    }
+    
 }

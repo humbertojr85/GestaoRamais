@@ -1,67 +1,54 @@
-<body>
-  <h1>Gestão de Ramais</h1>
+package com.midiavox.gestaoramais.service;
 
-  <div class="container">
-    <!-- Coluna Esquerda: Seções 1, 2 e 3 -->
-    <div class="coluna-esquerda">
-      <section>
-        <h2>1. Cadastrar Usuário</h2>
-        <form id="usuarioForm">
-          <input type="text" id="nome" placeholder="Nome" required />
-          <input type="email" id="email" placeholder="Email" required />
-          <button type="submit">Cadastrar</button>
-        </form>
-      </section>
+import com.midiavox.gestaoramais.model.Usuario;
+import com.midiavox.gestaoramais.repository.UsuarioRepository;
+import org.springframework.stereotype.Service;
 
-      <section>
-        <h2>2. Gerar Ramais Disponíveis</h2>
-        <form id="gerarRamaisForm">
-          <input type="number" id="inicioRamal" placeholder="Ramal Inicial" required />
-          <input type="number" id="fimRamal" placeholder="Ramal Final" required />
-          <button type="submit">Gerar Ramais</button>
-        </form>
-      </section>
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-      <section>
-        <h2>3. Logar em Ramal</h2>
-        <form id="logarForm">
-          <select id="usuarioSelect" required></select>
-          <select id="ramalSelect" required></select>
-          <button type="submit">Logar</button>
-        </form>
-      </section>
-    </div>
+@Service
+public class UsuarioService {
 
-    <!-- Coluna Direita: Seções 4 e 5 -->
-    <div class="coluna-direita">
-      <section>
-        <h2>4. Usuários Não Logados</h2>
-        <ul id="usuariosNaoLogados"></ul>
-      </section>
+    private final UsuarioRepository usuarioRepository;
 
-      <section>
-        <h2>5. Ramais Não Utilizados</h2>
-        <ul id="ramaisNaoUtilizados"></ul>
-      </section>
-    </div>
-  </div>
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
-  <!-- Seção 6: Tabela abaixo -->
-  <section>
-    <h2>6. Usuários Logados</h2>
-    <table id="usuariosLogadosTable">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Ramal</th>
-          <th>Status</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+    public Usuario criarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 
-  <script src="script.js"></script>
-</body>
+    public Optional<Usuario> buscarPorId(String id) {
+        return usuarioRepository.findById(UUID.fromString(id));
+    }
+
+    public List<Usuario> listarTodos() {
+        return usuarioRepository.findAll();
+    }
+
+    public void atualizarUsuario(String id, Usuario dadosAtualizados) {
+        UUID uuid = UUID.fromString(id);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(uuid);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuarioExistente = usuarioOptional.get();
+            if (dadosAtualizados.getNome() != null) {
+                usuarioExistente.setNome(dadosAtualizados.getNome());
+            }
+            if (dadosAtualizados.getEmail() != null) {
+                usuarioExistente.setEmail(dadosAtualizados.getEmail());
+            }
+            usuarioRepository.save(usuarioExistente);
+        }
+    }
+
+    public void deletarPorId(String id) {
+        UUID uuid = UUID.fromString(id);
+        if (usuarioRepository.existsById(uuid)) {
+            usuarioRepository.deleteById(uuid);
+        }
+    }
+}

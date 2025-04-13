@@ -74,6 +74,32 @@ document.getElementById("gerarRamaisForm").addEventListener("submit", async (e) 
   }
 });
 
+// Excluir ramais por faixa
+document.getElementById("btnExcluirRamais").addEventListener("click", async () => {
+  const inicio = document.getElementById("inicioRamal").value;
+  const fim = document.getElementById("fimRamal").value;
+
+  if (!inicio || !fim) {
+    alert("Preencha o intervalo de ramais para excluir.");
+    return;
+  }
+
+  if (confirm(`Deseja realmente excluir os ramais de ${inicio} até ${fim}?`)) {
+    const res = await fetch(`${api}/ramais/excluir-faixa`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ inicio, fim }),
+    });
+
+    if (res.ok) {
+      alert("Ramais excluídos com sucesso!");
+      carregarRamaisDisponiveis();
+    } else {
+      alert("Erro ao excluir ramais.");
+    }
+  }
+});
+
 // Logar usuário em ramal
 document.getElementById("logarForm").addEventListener("submit", async (e) => {
   e.preventDefault();

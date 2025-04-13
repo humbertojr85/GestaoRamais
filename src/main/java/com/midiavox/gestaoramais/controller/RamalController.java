@@ -39,6 +39,20 @@ public class RamalController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/excluir-faixa")
+    public ResponseEntity<String> excluirFaixaRamais(@RequestBody Map<String, Integer> faixa) {
+        try {
+            Integer inicio = faixa.get("inicio");
+            Integer fim = faixa.get("fim");
+
+            ramalService.excluirFaixaRamais(inicio, fim);
+            return ResponseEntity.ok("Ramais excluídos com sucesso");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
     @PostMapping("/logar")
     public ResponseEntity<String> logarRamal(@RequestBody Map<String, String> dados) {
         UUID idUsuario = UUID.fromString(dados.get("idUsuario"));
