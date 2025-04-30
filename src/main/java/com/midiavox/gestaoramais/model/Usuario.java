@@ -1,5 +1,6 @@
 package com.midiavox.gestaoramais.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class Usuario {
     private Instant updateTimestamp;
 
     @OneToOne(mappedBy = "usuarioLogado")
+    @JsonBackReference
     private Ramal ramal; // Ramal atual do usuário
 
     public Usuario() {}

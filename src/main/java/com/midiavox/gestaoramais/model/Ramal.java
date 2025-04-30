@@ -1,5 +1,6 @@
 package com.midiavox.gestaoramais.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,8 @@ public class Ramal {
     private String numero;
 
     @OneToOne
+    @JoinColumn(name = "usuario_logado_id")
+    @JsonManagedReference
     private Usuario usuarioLogado;
 
     public boolean isOcupado() {
