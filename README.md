@@ -100,27 +100,33 @@ Liderança | Desenvolvimento | Integração Web & Desktop
 
 ## 📸 Captura de Tela
 
-> _(Adicione alguns prints do sistema rodando)_
+> _(sistema rodando)_
 
 Visual do Sistema:
 ![image](https://github.com/user-attachments/assets/3a877a27-9e37-4c08-a288-dca3aac35205)
 
 Cadastrar Usuario:
+
 ![image](https://github.com/user-attachments/assets/54dd9667-d6d3-4d9a-b704-c40d56f8129c)
 
 Para Cadastrar ou excluir um range de ramais:
+
 ![image](https://github.com/user-attachments/assets/1846349d-1086-45fe-a24f-e7ba5c0ae574)
 
 Logar um Usuario em um Ramal:
+
 ![image](https://github.com/user-attachments/assets/5dbcaa16-db85-4230-9822-3c5c4cb7c490)
 
 Lista de Usuarios não logados (com opção de ser excluido também):
+
 ![image](https://github.com/user-attachments/assets/95f54f59-b1b8-45dd-a905-8a2325746fc3)
 
 Lista de ramais disponivéis (com opção de ser excluido também):
+
 ![image](https://github.com/user-attachments/assets/37752086-7763-4ca4-8a72-62c0ca53e9cd)
 
 Tabela de Usuario logados nos Ramais (com opação de deslogar o usuario do Ramal):
+
 ![image](https://github.com/user-attachments/assets/7b3964ca-186c-451d-a6e1-7d08216ff476)
 
 
