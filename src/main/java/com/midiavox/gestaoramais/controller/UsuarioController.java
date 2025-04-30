@@ -58,6 +58,15 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // Usuarios não logados
+    @GetMapping("/nao-logados")
+    public ResponseEntity<List<Usuario>> listarNaoLogados() {
+        List<Usuario> usuariosNaoLogados = usuarioRepository.findAll().stream()
+                .filter(usuario -> ramalRepository.findByUsuarioLogado(usuario).isEmpty())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(usuariosNaoLogados);
+    }
+
     // Deletar usuário
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable UUID id) {
