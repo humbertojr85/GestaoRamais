@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ramais")
-@CrossOrigin(origins = "*")
 public class RamalController {
 
     private final RamalService ramalService;
@@ -31,6 +31,11 @@ public class RamalController {
         } else {
             return ResponseEntity.badRequest().body("Nenhum ramal foi criado, todos já existem.");
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Ramal>> listarTodos() {
+        return ResponseEntity.ok(ramalService.listarTodos());
     }
 
     @GetMapping("/disponiveis")

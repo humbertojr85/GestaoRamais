@@ -12,5 +12,5 @@ public interface RamalRepository extends JpaRepository<Ramal, UUID> {
     Optional<Ramal> findByNumero(String numero);
     boolean existsByNumero(String numero);
     List<Ramal> findByUsuarioLogadoIsNull();
-    Optional<Ramal> findByUsuarioLogado(Usuario usuarioLogado); // 👈 Adicionado
+    Optional<Ramal> findByUsuarioLogado(Usuario usuarioLogado);
 }

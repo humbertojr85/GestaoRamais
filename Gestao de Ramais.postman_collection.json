@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "aa12abb4-f6fd-43a0-a318-1acd27937a64",
+		"name": "Gestao de Ramais",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31256078"
+	},
+	"item": [
+		{
+			"name": "Criar Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"Apagar\",\r\n    \"email\":\"apagar_pe@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar todos usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuarios não logados",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/nao-logados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"nao-logados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscar unico usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/b4332b65-a740-4562-b16b-7f4b6ba8a0b1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"b4332b65-a740-4562-b16b-7f4b6ba8a0b1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletar usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/58371a9d-bc23-4fc1-9070-704bea5b8a7b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"58371a9d-bc23-4fc1-9070-704bea5b8a7b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Ramal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"inicio\": 200,\r\n  \"fim\": 201\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ramais/gerar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"gerar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar ramais disponiveis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ramais/disponiveis",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"disponiveis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Todos os Ramais",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ramais",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletar ramal",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ramais/6440492c-2866-4d0d-88c6-6d74c752a423",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"6440492c-2866-4d0d-88c6-6d74c752a423"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletar ramais por faixa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"inicio\": 200,\r\n  \"fim\": 201\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ramais/excluir-faixa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"excluir-faixa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logar Usuario",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idUsuario\": \"b4332b65-a740-4562-b16b-7f4b6ba8a0b1\",\r\n    \"idRamal\": \"940c4022-3bf7-438c-8b90-a6c96c9292de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ramais/logar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"logar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logoff Usuario",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idUsuario\": \"b4332b65-a740-4562-b16b-7f4b6ba8a0b1\",\r\n    \"idRamal\": \"940c4022-3bf7-438c-8b90-a6c96c9292de\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ramais/logoff",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ramais",
+						"logoff"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

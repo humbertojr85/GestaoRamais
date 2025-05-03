@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -53,6 +50,24 @@ public class UsuarioController {
         return ResponseEntity.ok(salvo);
     }
 
+    //Buscar usuário por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable UUID id) {
+        return usuarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Usuarios não logados
+    @GetMapping("/nao-logados")
+    public ResponseEntity<List<Usuario>> listarNaoLogados() {
+        List<Usuario> usuariosNaoLogados = usuarioRepository.findAll().stream()
+                .filter(usuario -> ramalRepository.findByUsuarioLogado(usuario).isEmpty())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(usuariosNaoLogados);
+    }
+
+    // Deletar usuário
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable UUID id) {
         if (usuarioRepository.existsById(id)) {

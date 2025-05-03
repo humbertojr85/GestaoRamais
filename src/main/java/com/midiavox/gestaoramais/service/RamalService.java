@@ -39,6 +39,10 @@ public class RamalService {
         return ramalRepository.findByUsuarioLogadoIsNull();
     }
 
+    public List<Ramal> listarTodos() {
+        return ramalRepository.findAll();
+    }
+
     public Ramal getRamalById(UUID id) {
         return ramalRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ramal não encontrado"));
