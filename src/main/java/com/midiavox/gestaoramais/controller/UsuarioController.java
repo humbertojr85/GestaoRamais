@@ -2,10 +2,8 @@ package com.midiavox.gestaoramais.controller;
 
 import com.midiavox.gestaoramais.repository.UsuarioRepository;
 import com.midiavox.gestaoramais.repository.RamalRepository;
-import com.midiavox.gestaoramais.model.Ramal;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.midiavox.gestaoramais.model.Usuario;
-import com.midiavox.gestaoramais.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

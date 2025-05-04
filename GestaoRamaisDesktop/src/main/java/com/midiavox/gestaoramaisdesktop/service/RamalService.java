@@ -21,6 +21,10 @@ public interface RamalService {
     @DELETE("/ramais/excluir-faixa")
     Call<Void> excluirFaixa(@Body Map<String, Integer> faixa);
 
+    // Excluir ramal individual
+    @DELETE("/ramais/{id}")
+    Call<Void> excluirRamal(@Path("id") String id);
+
     // Logar usuário em ramal
     @POST("/ramais/logar")
     Call<Void> logarRamal(@Body Map<String, String> dados);

@@ -19,8 +19,8 @@ import retrofit2.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 
 public class MainView {
 
@@ -37,7 +37,6 @@ public class MainView {
     }
 
     public void mostrar(Stage stage) {
-        // Campos de entrada
         TextField nomeField = new TextField();
         nomeField.setPromptText("Nome");
 
@@ -56,13 +55,11 @@ public class MainView {
         ListView<Usuario> listaUsuariosNaoLogados = new ListView<>(usuariosNaoLogados);
         ListView<Ramal> listaRamaisDisponiveis = new ListView<>(ramaisDisponiveis);
 
-        // Botões
         Button cadastrarBtn = new Button("Cadastrar");
         Button gerarBtn = new Button("Gerar Ramais");
         Button excluirBtn = new Button("Excluir Ramais");
         Button logarBtn = new Button("Logar");
 
-        // Tabela de usuários logados
         TableView<Usuario> tabelaLogados = new TableView<>(usuariosLogados);
         TableColumn<Usuario, String> nomeCol = new TableColumn<>("Nome");
         nomeCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNome()));
@@ -77,6 +74,7 @@ public class MainView {
         TableColumn<Usuario, Void> acaoCol = new TableColumn<>("Ação");
         acaoCol.setCellFactory(col -> new TableCell<>() {
             private final Button logoffBtn = new Button("Logoff");
+
             {
                 logoffBtn.setStyle("-fx-background-color: #ff4d4d; -fx-text-fill: white;");
                 logoffBtn.setOnAction(e -> {
@@ -101,6 +99,7 @@ public class MainView {
                     });
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -110,7 +109,6 @@ public class MainView {
 
         tabelaLogados.getColumns().addAll(nomeCol, emailCol, ramalCol, acaoCol);
 
-        // Layouts
         VBox cadastrarBox = new VBox(5, new Label("1. Cadastrar Usuário"), nomeField, emailField, cadastrarBtn);
         VBox gerarBox = new VBox(5, new Label("2. Gerar Ramais"), inicioField, fimField, new HBox(5, gerarBtn, excluirBtn));
         VBox logarBox = new VBox(5, new Label("3. Logar em Ramal"), usuarioCombo, ramalCombo, logarBtn);
@@ -125,7 +123,6 @@ public class MainView {
         VBox root = new VBox(15, linha1, linha2, linha3);
         root.setPadding(new Insets(15));
 
-        // Ações
         cadastrarBtn.setOnAction(e -> {
             Usuario u = new Usuario(nomeField.getText(), emailField.getText());
             usuarioService.cadastrar(u).enqueue(new Callback<>() {
@@ -138,14 +135,12 @@ public class MainView {
                         emailField.clear();
                     } else {
                         mostrarErro("Erro", "Erro ao cadastrar: " + response.code());
-                        System.err.println("Erro ao cadastrar: Código " + response.code() + ", Mensagem: " + response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Usuario> call, Throwable t) {
                     mostrarErro("Erro", "Erro ao cadastrar: " + t.getMessage());
-                    System.err.println("Erro ao cadastrar: " + t.getMessage());
                 }
             });
         });
@@ -234,7 +229,6 @@ public class MainView {
             }
         });
 
-        // Scene
         stage.setScene(new Scene(root, 1100, 750));
         stage.setTitle("Gestão de Ramais - Desktop");
         stage.show();
@@ -246,10 +240,10 @@ public class MainView {
         usuarioService.listarUsuarios().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                if (response.isSuccessful()) {
-                    usuariosNaoLogados.clear();
-                    usuariosLogados.clear();
-                    if (response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Platform.runLater(() -> {
+                        usuariosNaoLogados.clear();
+                        usuariosLogados.clear();
                         for (Usuario u : response.body()) {
                             if (u.getRamal() == null) {
                                 usuariosNaoLogados.add(u);
@@ -257,58 +251,54 @@ public class MainView {
                                 usuariosLogados.add(u);
                             }
                         }
-                    }
+                    });
                 } else {
                     mostrarErro("Erro", "Erro ao carregar usuários: " + response.code());
-                    System.err.println("Erro ao carregar usuários: Código " + response.code() + ", Mensagem: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 mostrarErro("Erro", "Erro ao carregar usuários: " + t.getMessage());
-                System.err.println("Erro ao carregar usuários: " + t.getMessage());
             }
         });
 
         ramalService.listarDisponiveis().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Ramal>> call, Response<List<Ramal>> response) {
-                if (response.isSuccessful()) {
-                    ramaisDisponiveis.setAll(response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    Platform.runLater(() -> {
+                        ramaisDisponiveis.setAll(response.body());
+                    });
                 } else {
-                    mostrarErro("Erro", "Erro ao carregar ramais: " + response.code());
-                    System.err.println("Erro ao carregar ramais: Código " + response.code() + ", Mensagem: " + response.message());
+                    mostrarErro("Erro", "Erro ao carregar ramais disponíveis: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Ramal>> call, Throwable t) {
-                mostrarErro("Erro", "Erro ao carregar ramais: " + t.getMessage());
-                System.err.println("Erro ao carregar ramais: " + t.getMessage());
+                mostrarErro("Erro", "Erro ao carregar ramais disponíveis: " + t.getMessage());
             }
         });
     }
 
-    private void mostrarAlerta(String titulo, String msg) {
+    private void mostrarAlerta(String titulo, String mensagem) {
         Platform.runLater(() -> {
-            System.out.println("ALERTA (FX Thread): Título='" + titulo + "', Mensagem='" + msg + "'");
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setHeaderText(null);
-            a.setTitle(titulo);
-            a.setContentText(msg);
-            a.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(titulo);
+            alert.setHeaderText(null);
+            alert.setContentText(mensagem);
+            alert.showAndWait();
         });
     }
-    
-    private void mostrarErro(String titulo, String msg) {
+
+    private void mostrarErro(String titulo, String mensagem) {
         Platform.runLater(() -> {
-            System.err.println("ERRO (FX Thread): Título='" + titulo + "', Mensagem='" + msg + "'");
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText(null);
-            a.setTitle(titulo);
-            a.setContentText(msg);
-            a.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(titulo);
+            alert.setHeaderText(null);
+            alert.setContentText(mensagem);
+            alert.showAndWait();
         });
     }
 }

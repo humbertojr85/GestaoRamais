@@ -1,13 +1,12 @@
 package com.midiavox.gestaoramais.controller;
 
 import com.midiavox.gestaoramais.model.Ramal;
-import com.midiavox.gestaoramais.model.Usuario;
+//import com.midiavox.gestaoramais.model.Usuario;
 import com.midiavox.gestaoramais.service.RamalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
