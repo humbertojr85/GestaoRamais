@@ -15,4 +15,8 @@ public interface UsuarioService {
     // Cadastrar novo usuário
     @POST("/usuarios")
     Call<Usuario> cadastrar(@Body Usuario usuario);
+
+    // Delete um usuário
+    @DELETE("/usuarios/{id}")
+    Call<Void> excluir(@Path("id") String id);
 }

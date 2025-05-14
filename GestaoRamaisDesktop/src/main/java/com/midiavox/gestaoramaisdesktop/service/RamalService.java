@@ -18,12 +18,12 @@ public interface RamalService {
     Call<Void> gerarRamais(@Body Map<String, Integer> faixa);
 
     // Excluir faixa de ramais
-    @DELETE("/ramais/excluir-faixa")
+    @HTTP(method = "DELETE", path = "/ramais/excluir-faixa", hasBody = true)
     Call<Void> excluirFaixa(@Body Map<String, Integer> faixa);
 
     // Excluir ramal individual
     @DELETE("/ramais/{id}")
-    Call<Void> excluirRamal(@Path("id") String id);
+    Call<Void> excluirPorId(@Path("id") String id);
 
     // Logar usuário em ramal
     @POST("/ramais/logar")
